@@ -23,7 +23,7 @@ begin
     loop
         fetch c1 into c1_values;
         EXIT WHEN c1%NOTFOUND;
-        if arg_fecha_ini between c1_values.fecha_ini and c1_values.fecha_fin then
+        if arg_fecha_ini between c1_values.fecha_ini and c1_values.fecha_fin or arg_fecha_fin between c1_values.fecha_ini and c1_values.fecha_fin then
             raise_application_error(-20004, 'El vehiculo no esta disponible');
             EXIT;
         end if;
