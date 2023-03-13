@@ -6,6 +6,9 @@ create or replace procedure alquilar(arg_NIF_cliente varchar,
   l_tipo_combustible modelos.tipo_combustible%TYPE;
   l_precio_por_litro precio_combustible.precio_por_litro%TYPE;
   
+  e_parent_not_found EXCEPTION;
+  PRAGMA EXCEPTION_INIT(e_parent_not_found, -2291);
+  
   cursor c1 is 
     select * from reservas;
 
@@ -36,8 +39,10 @@ begin
   end if;
 
 exception
- when no_data_found then
+  when no_data_found then
     raise_application_error(-20002, 'Vehículo inexistente');
+  when e_parent_not_found then
+    raise_application_error(-20001, 'Cliente inexistente');
   
 end;
 /
