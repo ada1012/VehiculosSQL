@@ -62,8 +62,6 @@ begin
     values (l_nro_factura, n_days || ' dias de alquiler, vehiculo modelo ' || l_id_modelo, precio_dias);
     insert into lineas_factura (nroFactura, concepto, importe)
     values (l_nro_factura, 'Deposito lleno de ' || l_capacidad_deposito || ' litros de ' || l_tipo_combustible, precio_deposito);
-    
-    
   end if;
 
 exception
@@ -74,6 +72,15 @@ exception
   
 end;
 /
+
+-- ¿podría habernos añadido una reserva no recogida en esa SELECT que fuese incompatible con nuestra reserva?, ¿por qué?
+-- Si si hubiésemos utilizado unas fechas que solapasen a otras aunque por eso hemos creado la excepción que nos evita esta incompatibilidad
+
+-- ¿podría hacer INSERT o UPDATE sobre reservas y habernos añadido una reserva no recogida en esa SELECT que fuese incompatible con nuestra reserva?, ¿por qué?
+-- Misma respuesta que a la pregunta anterior
+
+-- Piensa por qué en este paso ninguna transacción concurrente podría habernos borrado el cliente o haber cambiado su NIF.
+-- Porque no estamos modificando la tabla cliente en ningún punto del procedimiento.
 
 set serveroutput on
 exec test_alquila_coches;
